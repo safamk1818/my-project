@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Calculator</title>
+<style>
+    /* Reset and base styles */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f5f5f5; /* Light gray background */
+        color: #333; /* Standard text color */
+        padding: 20px;
+    }
+
+    .calculator-container {
+        background-color: #fff; /* White card */
+        padding: 40px 35px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        text-align: center;
+        width: 100%;
+        max-width: 400px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .calculator-container:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+        margin-bottom: 25px;
+        font-size: 26px;
+        font-weight: 600;
+        color: #1a1a1a; /* Dark text for heading */
+    }
+
+    input[type="date"] {
+        padding: 12px;
+        width: 100%;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        margin-bottom: 20px;
+        outline: none;
+    }
+
+    input[type="date"]:focus {
+        border-color: #007BFF; /* Blue focus border */
+        box-shadow: 0 0 5px rgba(0,123,255,0.3);
+    }
+
+    button {
+        padding: 12px 30px;
+        font-size: 16px;
+        border: none;
+        border-radius: 6px;
+        background-color: #007BFF; /* Standard blue button */
+        color: #fff;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    #result {
+        margin-top: 20px;
+        font-weight: 500;
+        font-size: 18px;
+        color: #1a1a1a;
+    }
+
+    #result.error {
+        color: #d9534f; /* Standard red for errors */
+    }
+
+    @media(max-width: 500px){
+        .calculator-container {
+            padding: 30px 20px;
+        }
+
+        h2 {
+            font-size: 22px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="calculator-container">
+    <h2>Age Calculator</h2>
+    <input type="date" id="dob">
+    <button onclick="calculateDays()">Calculate Days Lived</button>
+    <p id="result"></p>
+</div>
+
+<script>
+function calculateDays() {
+    const dobInput = document.getElementById("dob").value;
+    const result = document.getElementById("result");
+
+    if (!dobInput) {
+        result.textContent = "Please select a date";
+        result.classList.add("error");
+        return;
+    }
+
+    result.classList.remove("error");
+
+    const dobDate = new Date(dobInput);
+    const today = new Date();
+
+    if (dobDate > today) {
+        result.textContent = "Date cannot be in the future";
+        result.classList.add("error");
+        return;
+    }
+
+    // Difference in milliseconds
+    const diffTime = today - dobDate;
+
+    // Convert to days
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    result.textContent = `You have lived for approximately ${diffDays} days.`;
+}
+</script>
+
+</body>
+</html>
